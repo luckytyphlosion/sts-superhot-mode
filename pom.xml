@@ -33,13 +33,13 @@
             <scope>system</scope>
             <systemPath>${env.USERPROFILE}/Documents/GitHub/sts_lib/ModTheSpire-v3.30.3/ModTheSpire.jar</systemPath>
         </dependency>
-        <dependency>
+        <!-- <dependency>
             <groupId>com.evacipated.cardcrawl</groupId>
             <artifactId>BaseMod</artifactId>
             <version>${BaseMod.version}</version>
             <scope>system</scope>
             <systemPath>${env.USERPROFILE}/Documents/GitHub/sts_lib/BaseMod-v5.52.3/BaseMod.jar</systemPath>
-        </dependency>
+        </dependency> -->
     </dependencies>
 
     <build>
