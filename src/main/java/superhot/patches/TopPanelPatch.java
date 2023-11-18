@@ -1,5 +1,7 @@
 package superhot.patches;
 
+import java.text.DecimalFormat;
+
 import com.evacipated.cardcrawl.modthespire.lib.SpireInstrumentPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -16,6 +18,8 @@ import javassist.expr.MethodCall;
     method = "render"
 )
 public class TopPanelPatch {
+    private static final DecimalFormat SECONDS_FORMATTER = new DecimalFormat("00.000");
+
     public static String formatHMSM_withMillis(float t) {
         String res = "";
         long duration = (long)t;
@@ -24,10 +28,12 @@ public class TopPanelPatch {
         int minutes = (int)(duration % 60L);
         int hours = (int)t / 3600;
 
+        String formattedSeconds = SECONDS_FORMATTER.format(seconds);
+
         if (hours > 0) {
-            res = String.format("%02d:%02d:%.03f", hours, minutes, seconds);
+            res = String.format("%02d:%02d:%s", hours, minutes, formattedSeconds);
         } else {
-            res = String.format("%02d:%.03f", minutes, seconds);
+            res = String.format("%02d:%s", minutes, formattedSeconds);
         } 
         return res;
     }
