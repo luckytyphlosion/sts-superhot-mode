@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import javassist.CannotCompileException;
 import javassist.expr.ExprEditor;
 import javassist.expr.FieldAccess;
+import javassist.expr.MethodCall;
 
 @SpirePatch(
     clz = AbstractDungeon.class,
@@ -28,7 +29,24 @@ public class AbstractDungeonPatch {
                             abstractDungeonClassName,
                             abstractDungeonClassName
                         )
-                    );
+                    );  
+                }
+            }
+        };
+    }
+
+    @SpireInstrumentPatch()
+    public static ExprEditor scaleInGameTime()
+    {
+        return new ExprEditor() {
+            @Override
+            public void edit(MethodCall m) throws CannotCompileException {
+                if (m.getMethodName().equals("getDeltaTime")) {
+                    // scale up so that decimal portion isn't lost in saving
+                    // will basically destroy any other use of play time
+                    // which includes run history from the run history screen
+                    // and total save file play time
+                    m.replace("$_ = ($proceed($$) * 1000.0F);");
                 }
             }
         };

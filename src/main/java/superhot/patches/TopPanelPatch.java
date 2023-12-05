@@ -22,6 +22,9 @@ public class TopPanelPatch {
 
     public static String formatHMSM_withMillis(float t) {
         String res = "";
+        // scale down
+        t = t / 1000.0F;
+
         long duration = (long)t;
         double seconds = t % 60;
         duration /= 60L;
